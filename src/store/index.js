@@ -1,10 +1,10 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex'
 
-import state from "./state";
-import mutations from "./mutations";
-import actions from "./actions";
+import state from './state'
+import mutations from './mutations'
+import actions from './actions'
 
 // Create a new store instance.
-const store = createStore({ state, mutations, actions });
+const store = createStore({ state, mutations, actions })
 
-export default store;
+export default store
