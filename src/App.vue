@@ -1,16 +1,13 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <ServiceTable />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ServiceTable from './components/ServiceTable.vue'
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
-  },
+  components: { ServiceTable },
 }
 </script>
 
