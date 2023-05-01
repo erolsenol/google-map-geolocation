@@ -1,9 +1,7 @@
 <template>
   <v-layout>
     <AppHeader />
-
     <NavigationDrawer />
-
     <router-view></router-view>
   </v-layout>
 </template>
