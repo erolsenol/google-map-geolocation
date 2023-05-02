@@ -3,10 +3,9 @@
 </template>
 
 <script>
-import { Loader } from '@googlemaps/js-api-loader'
-
 export default {
   name: 'GoogleMapLoader',
+  inject: ['googleMap'],
   props: {
     mapConfig: Object,
     apiKey: String,
@@ -18,27 +17,9 @@ export default {
       client: null,
     }
   },
-  methods: {
-    initializeMap() {
-      const mapContainer = this.$refs.googleMap
-      this.map = new this.google.maps.Map(mapContainer, this.mapConfig)
-    },
-  },
+  methods: {},
   async mounted() {
-    const loader = new Loader({
-      apiKey: process.env.VUE_APP_GOOGLE_MAP_API_KEY,
-      version: 'weekly',
-    })
-
-    loader.load().then(async () => {
-      // eslint-disable-next-line no-undef
-      const { Map } = await google.maps.importLibrary('maps')
-
-      this.map = new Map(document.getElementById('map'), {
-        center: { lat: 41.0, lng: 29.0 },
-        zoom: 10,
-      })
-    })
+    this.googleMap.init()
   },
 }
 </script>
