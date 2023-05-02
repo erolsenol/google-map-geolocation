@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     routeCreateSuccess(result, status) {
+      console.log(result)
       if (status == 'OK') {
         this.googleMap.directionsRenderer.setDirections(result)
 
@@ -53,11 +54,16 @@ export default {
       try {
         this.origin = this.googleMap.newLatLng(mockData.origin)
         this.destination = this.googleMap.newLatLng(mockData.destination)
+        const waypoints = mockData.passengers.map((pass) => ({
+          location: { lat: pass.lat, lng: pass.lng },
+        }))
 
         const request = {
           origin: this.origin,
           destination: this.destination,
           travelMode: this.travelMode,
+          waypoints: waypoints,
+          optimizeWaypoints: true,
         }
         this.googleMap.directionsService.route(request, this.routeCreateSuccess)
       } catch (error) {
