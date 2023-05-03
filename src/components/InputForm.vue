@@ -2,18 +2,6 @@
   <div class="form-container d-flex flex-column">
     <span class="text-h6 my-3">Data Input Form</span>
     <v-textarea variant="outlined" v-model="jsonData"></v-textarea>
-
-    <v-text-field
-      label="Lat"
-      variant="outlined"
-      v-model.number="lat"
-    ></v-text-field>
-    <v-text-field
-      label="Lng"
-      variant="outlined"
-      v-model.number="lng"
-    ></v-text-field>
-    <v-text-field label="Name" variant="outlined" v-model="name"></v-text-field>
     <v-btn @click="formSubmit" variant="outlined"> Button </v-btn>
   </div>
 </template>
@@ -25,9 +13,6 @@ export default {
   inject: ['googleMap'],
   data() {
     return {
-      name: '',
-      lat: 41.0,
-      lng: 29.2,
       jsonData: null,
       travelMode: 'DRIVING',
       origin: null,
@@ -37,6 +22,7 @@ export default {
   methods: {
     routeCreateSuccess(result, status) {
       console.log(result)
+      this.$store.state.snackbarState = true
       if (status == 'OK') {
         this.googleMap.directionsRenderer.setDirections(result)
 
@@ -48,6 +34,9 @@ export default {
           setName: 'destination',
           ...this.destination,
         })
+        if (result.routes.length > 0) {
+          this.totalWayCalc(result.routes[0].legs)
+        }
       }
     },
     formSubmit() {
@@ -55,7 +44,7 @@ export default {
         this.origin = this.googleMap.newLatLng(mockData.origin)
         this.destination = this.googleMap.newLatLng(mockData.destination)
         const waypoints = mockData.passengers.map((pass) => ({
-          location: { lat: pass.lat, lng: pass.lng },
+          location: { lat: pass.pickUpPoint.lat, lng: pass.pickUpPoint.lng },
         }))
 
         const request = {
@@ -69,6 +58,15 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    totalWayCalc(legs) {
+      const totalDistance = legs.reduce((a, b) => a + b.distance.value, 0)
+      const totalDuration = legs.reduce((a, b) => a + b.duration.value, 0)
+
+      this.$store.commit('setRouteInfo', {
+        kilometers: (totalDistance / 1000).toFixed(2),
+        hours: (totalDuration / 3600).toFixed(2),
+      })
     },
   },
 }

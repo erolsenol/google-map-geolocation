@@ -8,9 +8,9 @@
     "lng": 29.23
   },
   "passengers": [
-    { "name": "Dummy", "lat": 41.015, "lng": 29.215 },
-    { "name": "Jack", "lat": 41.015, "lng": 29.22 },
-    { "name": "Hans", "lat": 41.013, "lng": 29.223 },
-    { "name": "Hans", "lat": 41.01, "lng": 29.218 }
+    { "name": "Dummy", "pickUpPoint": { "lat": 41.015, "lng": 29.215 } },
+    { "name": "Jack", "pickUpPoint": { "lat": 41.015, "lng": 29.22 } },
+    { "name": "Hans", "pickUpPoint": { "lat": 41.013, "lng": 29.223 } },
+    { "name": "Hans", "pickUpPoint": { "lat": 41.01, "lng": 29.218 } }
   ]
 }

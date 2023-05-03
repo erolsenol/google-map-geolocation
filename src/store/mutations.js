@@ -8,4 +8,9 @@ export default {
   setOriginOrDestination(state, { setName, lat, lng }) {
     state[setName] = { lat, lng }
   },
+  setRouteInfo(state, { kilometers, hours }) {
+    state.routeInfo.kilometers = kilometers
+    state.routeInfo.hours = hours
+    state.routeInfo.isCalc = true
+  },
 }

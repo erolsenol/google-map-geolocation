@@ -3,6 +3,13 @@
     <AppHeader />
     <NavigationDrawer />
     <router-view></router-view>
+    <v-snackbar
+      v-model="$store.state.snackbarState"
+      color="black"
+      timeout="2000"
+    >
+      {{ $store.state.snackbarText }}
+    </v-snackbar>
   </v-layout>
 </template>
 
@@ -15,6 +22,12 @@ export default {
   components: {
     AppHeader,
     NavigationDrawer,
+  },
+  data() {
+    return {
+      snackbar: false,
+      timeout: 3000,
+    }
   },
 }
 </script>
