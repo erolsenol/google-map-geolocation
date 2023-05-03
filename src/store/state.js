@@ -4,8 +4,11 @@ export default {
   mapMarkers: [],
   origin: null,
   destination: null,
-  snackbarState: false,
-  snackbarText: '',
+  snackbar: {
+    state: false,
+    color: 'black',
+    text: '',
+  },
   routeInfo: {
     kilometers: 0,
     hours: 0,

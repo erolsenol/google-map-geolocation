@@ -4,11 +4,11 @@
     <NavigationDrawer />
     <router-view></router-view>
     <v-snackbar
-      v-model="$store.state.snackbarState"
-      color="black"
+      v-model="$store.state.snackbar.state"
+      :color="$store.state.snackbar.color"
       timeout="2000"
     >
-      {{ $store.state.snackbarText }}
+      {{ $store.state.snackbar.text }}
     </v-snackbar>
   </v-layout>
 </template>

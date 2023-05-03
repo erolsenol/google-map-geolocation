@@ -17,6 +17,7 @@ export default {
       travelMode: 'DRIVING',
       origin: null,
       destination: null,
+      passengers: [],
     }
   },
   methods: {
@@ -37,26 +38,52 @@ export default {
         if (result.routes.length > 0) {
           this.totalWayCalc(result.routes[0].legs)
         }
+      } else if (status == 'ZERO_RESULTS') {
+        this.$store.commit('showSnackbar', {
+          color: 'red-accent-2',
+          text: 'Route not found',
+        })
       }
     },
     formSubmit() {
-      try {
-        this.origin = this.googleMap.newLatLng(mockData.origin)
-        this.destination = this.googleMap.newLatLng(mockData.destination)
-        const waypoints = mockData.passengers.map((pass) => ({
-          location: { lat: pass.pickUpPoint.lat, lng: pass.pickUpPoint.lng },
-        }))
+      let routeData = null
 
-        const request = {
-          origin: this.origin,
-          destination: this.destination,
-          travelMode: this.travelMode,
-          waypoints: waypoints,
-          optimizeWaypoints: true,
+      if (this.jsonData) {
+        const isJsonResult = this.isJson(this.jsonData)
+        if (!isJsonResult) {
+          this.$store.commit('showSnackbar', {
+            color: 'red-accent-2',
+            text: 'Json Parse Error',
+          })
+          return
         }
-        this.googleMap.directionsService.route(request, this.routeCreateSuccess)
-      } catch (error) {
-        console.log(error)
+        routeData = JSON.parse(this.jsonData)
+      } else {
+        routeData = mockData
+      }
+
+      this.origin = this.googleMap.newLatLng(routeData.origin)
+      this.destination = this.googleMap.newLatLng(routeData.destination)
+      this.passengers = routeData.passengers
+
+      const waypoints = routeData.passengers.map((pass) => ({
+        location: { lat: pass.pickUpPoint.lat, lng: pass.pickUpPoint.lng },
+      }))
+
+      const request = {
+        origin: this.origin,
+        destination: this.destination,
+        travelMode: this.travelMode,
+        waypoints: waypoints,
+        optimizeWaypoints: true,
+      }
+      this.googleMap.directionsService.route(request, this.routeCreateSuccess)
+
+      if (this.passengers.length > 9) {
+        this.$store.commit('showSnackbar', {
+          color: 'yellow-lighten-2',
+          text: 'Input has passengers of more than 9',
+        })
       }
     },
     totalWayCalc(legs) {
@@ -67,6 +94,24 @@ export default {
         kilometers: (totalDistance / 1000).toFixed(2),
         hours: (totalDuration / 3600).toFixed(2),
       })
+
+      console.log(totalDuration)
+
+      if (totalDuration > 7200) {
+        this.$store.commit('showSnackbar', {
+          color: 'yellow-lighten-2',
+          text: 'Route duration from start to finish is over 2 hours',
+        })
+      }
+    },
+
+    isJson(str) {
+      try {
+        JSON.parse(str)
+      } catch (e) {
+        return false
+      }
+      return true
     },
   },
 }
