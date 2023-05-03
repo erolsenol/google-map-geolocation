@@ -4,15 +4,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="icon" href="favicon.ico" />
+    <title>Google Maps Directions</title>
   </head>
   <body>
     <noscript>
       <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
-        properly without JavaScript enabled. Please enable it to
-        continue.</strong
+        >We're sorry but Google Maps Directions doesn't work properly without
+        JavaScript enabled. Please enable it to continue.</strong
       >
     </noscript>
     <div id="app"></div>
@@ -54,10 +53,6 @@
       d[l]
         ? console.warn(p + ' only loads once. Ignoring:', g)
         : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)))
-    })({
-      key: 'AIzaSyDn9V6DrXEbewGcI-GyqlLz5BWLSIB8SJE',
-      // Add other bootstrap parameters as needed, using camel case.
-      // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
-    })
+    })({})
   </script>
 </html>
