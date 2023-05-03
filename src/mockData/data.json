@@ -11,6 +11,6 @@
     { "name": "Dummy", "pickUpPoint": { "lat": 41.015, "lng": 29.215 } },
     { "name": "Jack", "pickUpPoint": { "lat": 41.015, "lng": 29.22 } },
     { "name": "Hans", "pickUpPoint": { "lat": 41.013, "lng": 29.223 } },
-    { "name": "Hans", "pickUpPoint": { "lat": 41.01, "lng": 29.218 } }
+    { "name": "Tommy", "pickUpPoint": { "lat": 41.01, "lng": 29.218 } }
   ]
 }

@@ -22,7 +22,6 @@ export default {
   },
   methods: {
     routeCreateSuccess(result, status) {
-      console.log(result)
       this.$store.state.snackbarState = true
       if (status == 'OK') {
         this.googleMap.directionsRenderer.setDirections(result)
@@ -37,6 +36,12 @@ export default {
         })
         if (result.routes.length > 0) {
           this.totalWayCalc(result.routes[0].legs)
+
+          const routeDetailData = {
+            legs: result.routes[0].legs,
+            waypoint_order: result.routes[0].waypoint_order,
+          }
+          this.passengersRouteDetailCalc(routeDetailData)
         }
       } else if (status == 'ZERO_RESULTS') {
         this.$store.commit('showSnackbar', {
@@ -44,6 +49,26 @@ export default {
           text: 'Route not found',
         })
       }
+    },
+    passengersRouteDetailCalc({ legs, waypoint_order }) {
+      console.log(legs)
+      console.log(waypoint_order)
+
+      waypoint_order.forEach((order, index) => {
+        this.passengers[index].pickUpPointOrder = order
+      })
+
+      this.passengers.sort((a, b) => a.pickUpPointOrder - b.pickUpPointOrder)
+
+      let totalTime = 0
+
+      this.passengers.forEach((pass, index) => {
+        const tripTimeMinute = (legs[index].duration.value / 60).toFixed(2)
+        totalTime += Number(tripTimeMinute)
+        this.passengers[index].tripDuration = totalTime
+      })
+
+      this.$store.commit('setPassengers', this.passengers)
     },
     formSubmit() {
       let routeData = null
@@ -57,7 +82,7 @@ export default {
           })
           return
         }
-        routeData = JSON.parse(this.jsonData)
+        routeData = isJsonResult
       } else {
         routeData = mockData
       }
@@ -95,8 +120,6 @@ export default {
         hours: (totalDuration / 3600).toFixed(2),
       })
 
-      console.log(totalDuration)
-
       if (totalDuration > 7200) {
         this.$store.commit('showSnackbar', {
           color: 'yellow-lighten-2',
@@ -107,11 +130,11 @@ export default {
 
     isJson(str) {
       try {
-        JSON.parse(str)
+        const result = JSON.parse(str)
+        return result
       } catch (e) {
         return false
       }
-      return true
     },
   },
 }
