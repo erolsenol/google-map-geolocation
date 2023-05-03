@@ -24,4 +24,7 @@ export default {
     state.routeInfo.hours = hours
     state.routeInfo.isCalc = true
   },
+  setBoardingTime(state, time) {
+    state.routeInfo.averageBoardingTime = time
+  },
 }

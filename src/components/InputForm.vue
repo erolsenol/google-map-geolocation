@@ -66,6 +66,11 @@ export default {
       })
 
       this.$store.commit('setPassengers', this.passengers)
+
+      this.$store.commit(
+        'setBoardingTime',
+        (totalTime / this.passengers.length).toFixed(2)
+      )
     },
     formSubmit() {
       let routeData = null

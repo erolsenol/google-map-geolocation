@@ -12,6 +12,7 @@ export default {
   routeInfo: {
     kilometers: 0,
     hours: 0,
+    averageBoardingTime: 0,
     isCalc: false,
   },
 }
