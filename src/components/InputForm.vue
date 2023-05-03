@@ -51,9 +51,6 @@ export default {
       }
     },
     passengersRouteDetailCalc({ legs, waypoint_order }) {
-      console.log(legs)
-      console.log(waypoint_order)
-
       waypoint_order.forEach((order, index) => {
         this.passengers[index].pickUpPointOrder = order
       })
