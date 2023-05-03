@@ -1,6 +1,6 @@
 <template>
   <div class="form-container d-flex flex-column">
-    <span class="text-h6 my-3">Data Input Form</span>
+    <span class="text-h6 my-3">Data Entry Form</span>
     <v-textarea variant="outlined" v-model="jsonData"></v-textarea>
     <v-btn @click="formSubmit" variant="outlined"> Button </v-btn>
   </div>

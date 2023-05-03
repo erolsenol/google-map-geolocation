@@ -46,7 +46,12 @@ export default {
           sortable: true,
           title: 'Passenger Name',
         },
-        { key: 'tripDuration', sortable: true, title: 'Trip Duration' },
+        {
+          align: 'center',
+          key: 'tripDuration',
+          sortable: true,
+          title: 'Trip Duration',
+        },
       ],
     }
   },
