@@ -48,3 +48,10 @@ Clicking the button without entering data will create a default route
   ]
 }
 ```
+
+### Example .env file
+
+```
+NODE_ENV="development"
+VUE_APP_GOOGLE_MAP_API_KEY=""
+```
